@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Coding Course - Glowing Theme</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Basic Reset & Font --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        /* --- Body Styling --- */
+        body {
+            background: #0B0C10; /* Very dark blue/black background */
+            color: #C5C6C7; /* Light gray text */
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column; /* Stack header, content, footer */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* --- Glow Animations --- */
+        @keyframes subtleGlow {
+            0% { box-shadow: 0 0 8px rgba(102, 252, 241, 0.3), 0 0 16px rgba(102, 252, 241, 0.2); }
+            50% { box-shadow: 0 0 16px rgba(102, 252, 241, 0.45), 0 0 24px rgba(102, 252, 241, 0.3); }
+            100% { box-shadow: 0 0 8px rgba(102, 252, 241, 0.3), 0 0 16px rgba(102, 252, 241, 0.2); }
+        }
+        @keyframes strongGlow {
+             0% { box-shadow: 0 0 15px rgba(102, 252, 241, 0.6), 0 0 30px rgba(102, 252, 241, 0.45); }
+             50% { box-shadow: 0 0 25px rgba(102, 252, 241, 0.8), 0 0 45px rgba(102, 252, 241, 0.6); }
+             100% { box-shadow: 0 0 15px rgba(102, 252, 241, 0.6), 0 0 30px rgba(102, 252, 241, 0.45); }
+        }
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 6px rgba(102, 252, 241, 0.6), 0 0 12px rgba(102, 252, 241, 0.5); }
+            50% { text-shadow: 0 0 12px rgba(102, 252, 241, 0.8), 0 0 18px rgba(102, 252, 241, 0.7); }
+            100% { text-shadow: 0 0 6px rgba(102, 252, 241, 0.6), 0 0 12px rgba(102, 252, 241, 0.5); }
+        }
+        @keyframes borderGlow {
+            0% { border-color: rgba(102, 252, 241, 0.7); box-shadow: 0 0 8px rgba(102, 252, 241, 0.6); }
+            50% { border-color: rgba(102, 252, 241, 1.0); box-shadow: 0 0 16px rgba(102, 252, 241, 0.8); }
+            100% { border-color: rgba(102, 252, 241, 0.7); box-shadow: 0 0 8px rgba(102, 252, 241, 0.6); }
+        }
+
+        /* --- Layout --- */
+        .container {
+            display: flex;
+            flex: 1; /* Allow container to grow and fill space */
+            flex-direction: column; /* Stack sidebar/main on small screens */
+        }
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row; /* Sidebar and main side-by-side */
+            }
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: 100%; /* Full width on small screens */
+            background: #1F2833; /* Darker background for sidebar */
+            padding: 1.5rem;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.4), 0 0 10px rgba(102, 252, 241, 0.15);
+            border-right: 1px solid rgba(102, 252, 241, 0.2);
+            animation: subtleGlow 6s infinite alternate;
+            animation-delay: 0.5s;
+            display: flex;
+            flex-direction: column; /* Stack title and nav */
+        }
+        @media (min-width: 768px) {
+            .sidebar {
+                width: 280px; /* Fixed width on larger screens */
+                height: calc(100vh - 60px); /* Adjust based on header height */
+                position: sticky;
+                top: 60px; /* Adjust based on header height */
+                overflow-y: auto;
+            }
+        }
+        .sidebar-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #66FCF1; /* Accent color */
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(102, 252, 241, 0.3);
+            text-shadow: 1px 1px 6px rgba(0,0,0,0.4), 0 0 8px rgba(102, 252, 241, 0.4);
+            animation: textGlow 4s infinite alternate;
+        }
+        .sidebar nav {
+            flex-grow: 1; /* Allow nav to take remaining space */
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+        .sidebar-link {
+            display: block;
+            padding: 0.7rem 1rem;
+            color: #C5C6C7;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+            background-color: rgba(102, 252, 241, 0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .sidebar-link:hover {
+            background: rgba(102, 252, 241, 0.15);
+            color: #66FCF1;
+            transform: translateX(3px);
+            box-shadow: 0 6px 15px rgba(102, 252, 241, 0.3), 0 0 10px rgba(102, 252, 241, 0.2);
+            border-color: rgba(102, 252, 241, 0.4);
+            text-shadow: 0 0 8px rgba(102, 252, 241, 0.5);
+        }
+        .sidebar-link.active {
+            background: linear-gradient(135deg, #66FCF1, #45A29E);
+            color: #1F2833; /* Dark text on light background */
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(102, 252, 241, 0.5), 0 0 15px rgba(102, 252, 241, 0.4);
+            border-color: transparent;
+            animation: strongGlow 2.5s infinite alternate;
+            text-shadow: none;
+        }
+
+        /* --- Main Content --- */
+        .main-content {
+            flex: 1; /* Take remaining horizontal space */
+            padding: 2rem 3%;
+            overflow-y: auto; /* Allow scrolling only in main content */
+             /* Ensure it scrolls independently if sidebar is sticky */
+             height: calc(100vh - 60px); /* Adjust based on header height */
+        }
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #66FCF1;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5), 0 0 18px rgba(102, 252, 241, 0.6);
+            animation: textGlow 3s infinite alternate;
+        }
+        @media (max-width: 767px) {
+            .main-content { height: auto; } /* Remove fixed height on mobile */
+            .main-title { font-size: 2rem; }
+        }
+
+        /* --- Content Section Styling (Cards) --- */
+        .content-section {
+            background: rgba(31, 40, 51, 0.85); /* Slightly more opaque */
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.55), 0 0 20px rgba(102, 252, 241, 0.3);
+            animation: subtleGlow 5s infinite alternate;
+            position: relative;
+            border: 1px solid rgba(102, 252, 241, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            will-change: transform, box-shadow;
+        }
+        .content-section:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.65), 0 0 35px rgba(102, 252, 241, 0.5);
+            animation-play-state: paused; /* Pause glow on hover */
+        }
+        .content-section::before { /* Glowing border effect */
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; border: 2px solid transparent;
+            border-radius: 12px; /* Match parent */
+            background: linear-gradient(60deg, #66FCF1, #45A29E, #66FCF1) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out; mask-composite: exclude;
+            animation: borderGlow 3.5s infinite alternate;
+            pointer-events: none; opacity: 0.8;
+            z-index: -1; /* Place behind content */
+        }
+
+        /* --- Typography within Sections --- */
+        .content-section h2 {
+            color: #66FCF1; /* Accent color */
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-shadow: 1px 1px 7px rgba(0,0,0,0.4), 0 0 12px rgba(102, 252, 241, 0.5);
+            border-left: 4px solid #66FCF1;
+            padding-left: 0.8rem;
+            animation: textGlow 3.5s infinite alternate;
+        }
+        .content-section h3 {
+            color: #a2fbf5; /* Lighter accent */
+            margin: 1.5rem 0 1rem;
+            font-size: 1.3rem;
+            font-weight: 500;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.3), 0 0 8px rgba(102, 252, 241, 0.3);
+        }
+        .content-section p {
+            color: #C5C6C7;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        .content-section ul {
+            list-style: none; /* Remove default */
+            padding-left: 0;
+            margin-bottom: 1rem;
+        }
+         .content-section ul li {
+            position: relative;
+            padding-left: 1.8rem; /* Space for custom bullet */
+            margin-bottom: 0.8rem;
+            color: #C5C6C7;
+         }
+        .content-section ul li::before { /* Custom bullet */
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5em; /* Vertically center */
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background-color: #66FCF1;
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(102, 252, 241, 0.7);
+        }
+        .content-section strong {
+            color: #ffffff; /* Brighter white for emphasis */
+            font-weight: 600;
+        }
+        .content-section code { /* Style for inline code if needed */
+             background-color: rgba(102, 252, 241, 0.1);
+             color: #a2fbf5;
+             padding: 0.2em 0.4em;
+             border-radius: 4px;
+             font-size: 0.9em;
+             border: 1px solid rgba(102, 252, 241, 0.2);
+        }
+
+        /* --- Table Styling --- */
+        .table-container {
+            overflow-x: auto; /* Allow horizontal scroll on small screens */
+            margin-top: 1.5rem;
+            border: 1px solid rgba(102, 252, 241, 0.25);
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4), 0 0 10px rgba(102, 252, 241, 0.2);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Remove gaps between cells */
+            background-color: rgba(11, 12, 16, 0.8); /* Darker table background */
+        }
+        th, td {
+            padding: 0.9rem 1.1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(102, 252, 241, 0.2);
+            color: #C5C6C7;
+            font-size: 0.95rem;
+        }
+        th {
+            background-color: rgba(102, 252, 241, 0.1);
+            color: #66FCF1; /* Accent color for headers */
+            font-weight: 600;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+        }
+        tr:last-child td {
+            border-bottom: none; /* Remove border from last row */
+        }
+        tr:hover {
+            background-color: rgba(102, 252, 241, 0.08); /* Subtle hover effect */
+        }
+
+        /* --- Header --- */
+        .header {
+            background: linear-gradient(180deg, rgba(31, 40, 51, 1) 0%, rgba(25, 32, 41, 1) 100%);
+            padding: 0.8rem 3%; /* Adjusted padding */
+            display: flex;
+            justify-content: center; /* Center title */
+            align-items: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5), 0 0 15px rgba(102, 252, 241, 0.2), 0 5px 15px -5px rgba(102, 252, 241, 0.5);
+            height: 60px; /* Fixed height */
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(102, 252, 241, 0.25);
+        }
+        .header-title {
+            color: #66FCF1;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5), 0 0 14px rgba(102, 252, 241, 0.5);
+            animation: textGlow 3.5s infinite alternate;
+            letter-spacing: 0.5px;
+        }
+        @media (max-width: 767px) {
+            .header-title { font-size: 1.5rem; }
+        }
+
+
+        /* --- Footer --- */
+        .footer {
+            background: #1F2833;
+            padding: 2rem 1rem;
+            text-align: center;
+            color: #a0a1a3;
+            border-top: 1px solid rgba(102, 252, 241, 0.3);
+            margin-top: auto; /* Pushes footer to bottom */
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.45), 0 0 15px rgba(102, 252, 241, 0.25);
+            position: relative;
+            animation: subtleGlow 5s infinite alternate;
+            animation-delay: 1s;
+        }
+        .footer::before { /* Top glowing line */
+            content: ''; position: absolute; top: -1px; left: 0;
+            width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, #45A29E, #66FCF1, #45A29E, transparent);
+            animation: borderGlow 4s infinite linear;
+            opacity: 0.8;
+        }
+        .footer p {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* --- Scrollbar --- */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #1F2833; }
+        ::-webkit-scrollbar-thumb { background: #45A29E; border-radius: 5px; border: 2px solid #1F2833; }
+        ::-webkit-scrollbar-thumb:hover { background: #66FCF1; }
+
+        /* --- Smooth Scrolling --- */
+        html { scroll-behavior: smooth; }
+
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1 class="header-title">PROMPT MINDS PRESENTED BY VIBE CODING FULL COURSE</h1>
+    </header>
+
+    <div class="container">
+
+        <aside class="sidebar">
+            <h2 class="sidebar-title">Course Modules</h2>
+            <nav>
+                <ul>
+                    </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <h1 class="main-title">Vibe Coding Seekhein</h1>
+
+            <section id="module-1" class="content-section">
+                <h2>Module 1: Vibe Coding Kya Hai?</h2>
+                <p>
+                    Vibe coding computer code likhne ka ek naya tareeka hai. Ismein aap Artificial Intelligence (AI) program ko sirf yeh batate hain ki aap kya banana chahte hain, aur AI aapke liye woh product bana deta hai.
+                </p>
+                <p>
+                    February 2025 mein, <strong>Andrej Karpathy</strong> (OpenAI co-founder) ne is term ko introduce kiya. Unhone kaha ki yeh coding ka ek naya andaaz hai jismein aap poori tarah se apne intuition par bharosa karte hain, AI ki tezi se badhti hui capabilities ko apnaate hain, aur yeh tak bhool jaate hain ki code naam ki koi cheez exist bhi karti hai.
+                </p>
+                 <p>
+                    Focus code ki technicalities par nahi, balki idea par hota hai, aur AI us idea ko reality mein badalne ka kaam karta hai. Yeh non-technical logon ke liye bahut empowering ho sakta hai.
+                </p>
+            </section>
+
+            <section id="module-2" class="content-section">
+                <h2>Module 2: Vibe Coding Kaise Kaam Karta Hai?</h2>
+                <p>
+                    Process bahut aasaan hai:
+                </p>
+                <ul>
+                    <li>Aap AI program ko batate hain ki aap kya banana chahte hain (e.g., to-do list app, chota game).</li>
+                    <li>Aap aam bolchal ki bhasha (natural language) ka istemaal karte hain, technical terms ki zaroorat nahi.</li>
+                    <li>AI aapki baat samajhkar khud hi code likhta hai.</li>
+                    <li>Aapka kaam: AI ko direction dena, code ko test karna, aur refine karna. AI aapka coding assistant hota hai.</li>
+                </ul>
+                <p>
+                    Kuch tools ismein madad karte hain: <strong>Replit Agent, Cursor Composer, Windsurf</strong>.
+                </p>
+                <p>
+                    Yeh coding ko un logon ke liye bhi sambhav banata hai jinhone pehle code nahi kiya hai. Lekin, logical thinking aur problem-solving skills phir bhi zaroori hain.
+                </p>
+            </section>
+
+            <section id="module-3" class="content-section">
+                <h2>Module 3: Vibe Coding Ke Tatva Aur Siddhant</h2>
+                <p>
+                    Kuch zaroori baatein:
+                </p>
+                <ul>
+                    <li><strong>AI par Nirbharta:</strong> Code banane ke liye AI programs par poori tarah depend karta hai.</li>
+                    <li><strong>Code Samajhna Zaroori Nahi:</strong> Technical expertise ke bina bhi accessible hai (lekin problems fix karna mushkil ho sakta hai).</li>
+                    <li><strong>Imperfections ki Svikriti:</strong> AI ka code perfect nahi hoga; bugs/glitches ho sakte hain, aur ise accept karna hota hai.</li>
+                    <li><strong>Idea aur Sabr:</strong> Coder ke idea aur thode sabr par based hai, na ki coding ke gehre gyan par.</li>
+                    <li><strong>Outcomes par Focus:</strong> Desired result achieve karne par zyada zor, code ki details par kam.</li>
+                    <li><strong>Natural Language Interaction:</strong> AI se aam bhasha mein baat karna.</li>
+                    <li><strong>Democratization:</strong> App development ko sabke liye accessible banana.</li>
+                    <li><strong>Control ki Kami:</strong> Code ko bina samjhe accept karne se control kam ho sakta hai aur debugging/customization mushkil.</li>
+                    <li><strong>Suitability:</strong> Personal projects, prototypes, ya kam mahatvapurna applications ke liye zyada suitable ho sakta hai. Professional settings mein reliability/maintainability zaroori hai.</li>
+                </ul>
+            </section>
+
+            <section id="module-4" class="content-section">
+                <h2>Module 4: Vibe Coding Ke Upyog Aur Udaharan</h2>
+                 <p>
+                    Istemal kahan ho sakta hai:
+                </p>
+                <ul>
+                    <li><strong>"Software for One":</strong> Kevin Roose ne personalized tools banaye (e.g., LunchBox Buddy app).</li>
+                    <li><strong>Rapid Prototyping & Hobby Projects:</strong> Jaldi se functional code banana.</li>
+                    <li><strong>Startups:</strong> Shuruaati stages mein tezi se development.</li>
+                    <li><strong>Learning:</strong> Experienced programmers naye languages/tech seekhne ke liye istemal kar sakte hain.</li>
+                </ul>
+                 <h3>Kuch Udaharan:</h3>
+                 <ul>
+                     <li>Replit Agent/Assistant se bani apps.</li>
+                     <li>Pieter Levels ka Flight Simulator Game (Cursor se bana).</li>
+                     <li>Simple web tools (ad spend calculator).</li>
+                     <li>Utility tools (image compressor).</li>
+                 </ul>
+                 <p>
+                     Currently simple/individual tools ya prototyping ke liye zyada suitable hai. Startups mein AI-generated code ka istemal badh raha hai.
+                 </p>
+            </section>
+
+            <section id="module-5" class="content-section">
+                <h2>Module 5: Vibe Coding Se Paise Kaise Kamaye?</h2>
+                 <p>
+                    Paise kamane ke tareeke:
+                </p>
+                <ul>
+                    <li><strong>Simple Apps Bechkar:</strong> Specific problem solve karne wale apps (to-do, calculator) banakar online bechna.</li>
+                    <li><strong>Niche Tools Banakar:</strong> Kisi khaas audience ke liye useful tool banana (e.g., Paul Graham essay tracker).</li>
+                    <li><strong>Freelancing:</strong> Apni vibe coding skills offer karna (simple apps/prototypes ke liye). Job boards par demand aa rahi hai.</li>
+                    <li><strong>Games Banakar:</strong> Simple games banakar ads/in-app purchases se monetize karna (e.g., Levels Flying Game).</li>
+                    <li><strong>Content Creation:</strong> Vibe coding ke baare mein blog/video banakar monetize karna.</li>
+                    <li><strong>Templates/Prompts Bechkar:</strong> Beginners ke liye resources (templates, prompts, guides) bechna.</li>
+                    <li><strong>Affiliate Marketing:</strong> Vibe coding tools/platforms ko promote karke commission earn karna.</li>
+                </ul>
+                 <p>
+                    <strong>Success Mantra:</strong> Sirf random apps generate na karein. Kisi specific need ko identify karein ya genuinely useful/entertaining cheez banayein. Target user ko samajhna zaroori hai.
+                </p>
+                <h3>Success Stories:</h3>
+                 <ul>
+                     <li>Pieter Levels Flight Simulator: <strong>$57k MRR</strong> kuch hi dino mein.</li>
+                     <li>SecretNameGame.com: <strong>~$250k yearly revenue</strong>.</li>
+                     <li>SummedUp.ai: <strong>$4.8M revenue</strong> (2024).</li>
+                 </ul>
+                 <p>
+                    In creators ke paas prior knowledge ya audience understanding thi. Success ke liye sirf prompting nahi, user needs, marketing, technical oversight bhi zaroori hai. First-mover advantage mil sakta hai.
+                </p>
+            </section>
+
+            <section id="module-6" class="content-section">
+                <h2>Module 6: Zaroori Skills</h2>
+                 <p>
+                    Kya hunar chahiye:
+                </p>
+                <ul>
+                    <li><strong>Effective Communication (Prompting):</strong> AI ko clear aur specific instructions dena.</li>
+                    <li><strong>Problem Solving:</strong> Agar AI galat code banaye toh problem identify karke guide karna.</li>
+                    <li><strong>Basic Technical Concepts:</strong> Code poora samajhna zaroori nahi, par basic knowledge helpful hai.</li>
+                    <li><strong>Testing & Feedback:</strong> AI ke code ko test karna aur feedback dena.</li>
+                    <li><strong>Idea Generation:</strong> Achha app/tool ka idea hona.</li>
+                    <li><strong>User Understanding:</strong> Target audience ki needs ko samajhna.</li>
+                    <li><strong>Marketing & Promotion:</strong> Apne creations ko logon tak pahunchana.</li>
+                    <li><strong>Patience:</strong> AI se sahi result milne mein time lag sakta hai.</li>
+                    <li><strong>Creative Thinking & Business Sense:</strong> Monetization ke liye zaroori.</li>
+                </ul>
+                 <p>
+                    Effective prompting ek important skill ban rahi hai ("Prompt Engineers" ka role aa sakta hai).
+                </p>
+            </section>
+
+            <section id="module-7" class="content-section">
+                <h2>Module 7: Resources Aur Tools</h2>
+                 <h3>Tools:</h3>
+                <ul>
+                    <li><strong>Replit:</strong> Online platform, AI Agent/Assistant features.</li>
+                    <li><strong>Cursor:</strong> AI-powered code editor.</li>
+                    <li><strong>Windsurf:</strong> AI coding tool.</li>
+                    <li><strong>Bolt:</strong> Figma se app banane ka tool.</li>
+                    <li><strong>Lovable:</strong> Simple projects ke liye aasaan tool.</li>
+                </ul>
+                 <h3>Platforms & Communities:</h3>
+                 <ul>
+                     <li><strong>Vibe Code Careers:</strong> Vibe coding jobs ka job board.</li>
+                     <li><strong>Indie Hackers:</strong> Entrepreneurs ka community.</li>
+                     <li><strong>Reddit:</strong> r/vibecoding jaise subreddits.</li>
+                 </ul>
+                 <h3>Learning:</h3>
+                 <ul>
+                     <li><strong>YouTube:</strong> Tutorials aur case studies.</li>
+                     <li><strong>Online Courses:</strong> AI-assisted development par courses search karein.</li>
+                 </ul>
+                 <h3 style="margin-top: 2rem;">Tools Ka Table:</h3>
+                 <div class="table-container">
+                     <table>
+                         <thead>
+                             <tr>
+                                 <th>Tool Name</th>
+                                 <th>Key Features</th>
+                                 <th>Potential Use Cases for Earning Money</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             <tr>
+                                 <td>Replit</td>
+                                 <td>AI-powered code generation, hosting, deployment</td>
+                                 <td>Creating and hosting simple web apps, prototypes, backend for mobile apps</td>
+                             </tr>
+                             <tr>
+                                 <td>Cursor</td>
+                                 <td>AI-powered code editing, debugging, natural language queries</td>
+                                 <td>Building more complex applications with AI assistance, freelancing for code generation and refinement</td>
+                             </tr>
+                             <tr>
+                                 <td>Windsurf</td>
+                                 <td>Autocomplete, chat, search across multiple languages</td>
+                                 <td>Assisting in coding tasks, potentially for freelance work or building personal projects</td>
+                             </tr>
+                             <tr>
+                                 <td>Bolt</td>
+                                 <td>Building apps from Figma designs</td>
+                                 <td>Creating UI-focused applications, potentially for designers looking to monetize their designs</td>
+                             </tr>
+                             <tr>
+                                 <td>Lovable</td>
+                                 <td>Easy for simple projects and tech newbies</td>
+                                 <td>Building very basic apps or prototypes quickly, suitable for beginners</td>
+                             </tr>
+                         </tbody>
+                     </table>
+                 </div>
+                 <p style="margin-top: 1.5rem;">
+                     Itne saare tools aur resources ka hona beginners ke liye shuru karna aasaan banata hai. Dedicated job boards professionalization ka signal dete hain.
+                 </p>
+            </section>
+
+            <section id="module-8" class="content-section">
+                <h2>Module 8: Fayde Aur Savdhaniyan</h2>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+                     <style>
+                        @media (min-width: 640px) {
+                            #pros-cons-grid { grid-template-columns: 1fr 1fr; }
+                        }
+                    </style>
+                    <div id="pros-cons-grid" style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+                        <div>
+                            <h3 style="color: #66f1a1;">Fayde (Pros)</h3>
+                            <ul>
+                                <li>Accessibility (non-technical logon ke liye aasaan).</li>
+                                <li>Speed (tez development).</li>
+                                <li>Prototyping (ideas ko jaldi test karna).</li>
+                                <li>Productivity (experienced developers ke liye bhi).</li>
+                            </ul>
+                        </div>
+                        <div>
+                             <h3 style="color: #f16666;">Savdhaniyan (Cons)</h3>
+                            <ul>
+                                <li>Bugs & Security Risks.</li>
+                                <li>Quality Variation (code reliability fix nahi).</li>
+                                <li>Risk of Unknown Code (bina samjhe accept karna).</li>
+                                <li>Complexity Limit (bade projects ke liye shayad suitable nahi).</li>
+                                <li>Skill Atrophy (apni coding skills kam ho sakti hain).</li>
+                                <li>Privacy Concerns (cloud AI tools ke saath).</li>
+                                <li>Low-Quality App Proliferation.</li>
+                                <li>Long-term Maintenance Challenges.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                 <p style="margin-top: 1.5rem;">
+                     Vibe coding se code generate karna aasaan hai, par isse bahut saare simple, buggy, unmaintainable apps ban sakte hain. Long-term maintenance/security ke liye experienced engineers ki zaroorat pad sakti hai.
+                 </p>
+            </section>
+
+             <section id="module-9" class="content-section">
+                <h2>Module 9: Nishkarsh</h2>
+                <p>
+                    Vibe coding software banane ka ek naya aur exciting tareeka hai jo non-technical logon ke liye bhi possibilities open karta hai.
+                </p>
+                 <p>
+                    Isse paise kamane ke bhi kai tareeke hain, khaaskar simple aur niche applications banakar. Lekin iske risks (quality, security, maintenance) aur limitations ko samajhna bahut zaroori hai.
+                </p>
+                 <p>
+                    Future mein AI ki capabilities aur improve hongi, jisse vibe coding aur bhi powerful ho sakta hai. Agar aapke paas achha idea hai aur aap thoda sabr rakh sakte hain, toh yeh ek interesting option ho sakta hai.
+                </p>
+            </section>
+
+        </main>
+
+    </div> <footer class="footer">
+        <p>© 2025 Vibe Coding Course. Inspired by modern web aesthetics.</p>
+    </footer>
+
+    <script>
+        // JavaScript for dynamic sidebar generation and active link highlighting
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.main-content section[id^="module-"]');
+            const navUl = document.querySelector('.sidebar nav ul');
+            const mainContent = document.querySelector('.main-content'); // Target the scrollable main area
+
+            if (!sections.length || !navUl || !mainContent) {
+                console.error("Required elements for sidebar navigation not found.");
+                return; // Stop script if elements are missing
+            }
+
+            // Generate navigation links
+            sections.forEach((section, index) => {
+                const titleElement = section.querySelector('h2');
+                if (!titleElement) return; // Skip if section has no h2
+
+                // Extract title text, removing the "Module X: " part for cleaner links
+                const titleText = titleElement.textContent.includes(':')
+                                  ? titleElement.textContent.substring(titleElement.textContent.indexOf(':') + 1).trim()
+                                  : `Module ${index + 1}`; // Fallback title
+                const sectionId = section.id;
+
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = `#${sectionId}`;
+                a.textContent = `Module ${index + 1}: ${titleText}`;
+                a.className = 'sidebar-link'; // Apply the class for styling
+                li.appendChild(a);
+                navUl.appendChild(li);
+            });
+
+            const navLinks = document.querySelectorAll('.sidebar-link');
+
+            // Function to update active link based on scroll position in main content
+            function updateActiveLink() {
+                let currentSectionId = '';
+                const scrollPosition = mainContent.scrollTop;
+                const mainContentHeight = mainContent.clientHeight;
+                const mainContentScrollHeight = mainContent.scrollHeight;
+
+                sections.forEach(section => {
+                    // Adjust offsetTop relative to the main content scroll container if needed
+                    // For this layout, offsetTop should be relative to the document or main content
+                    const sectionTop = section.offsetTop - mainContent.offsetTop - 70; // Adjust offset for header/padding
+
+                    if (scrollPosition >= sectionTop) {
+                        currentSectionId = section.id;
+                    }
+                });
+
+                 // If scrolled to the very bottom, highlight the last section
+                 if (scrollPosition + mainContentHeight >= mainContentScrollHeight - 50) { // Add tolerance
+                     if (sections.length > 0) {
+                         currentSectionId = sections[sections.length - 1].id;
+                     }
+                 }
+
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    // Check if the link's href matches the current section ID
+                    if (link.getAttribute('href') === `#${currentSectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            // Update active link on scroll within the main content area
+            mainContent.addEventListener('scroll', updateActiveLink);
+
+            // Initial call to set the active link on page load/refresh
+            updateActiveLink();
+        });
+    </script>
+
+</body>
+</html>
